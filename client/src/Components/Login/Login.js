@@ -1,7 +1,16 @@
 import { VStack, ButtonGroup, FormControl, FormLabel, Button, FormErrorMessage, Input, Heading } from '@chakra-ui/react'
-import React from 'react'
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Login = () => {
+  const formik = useFormik({
+    initialValues: { username: "", password: "" },
+    validationSchema: Yup.object({
+      username: Yup.string().required("Username Required").min(6, "Username too short").max(28, "Username too long")
+    }),
+  });
+
   return (
     <div>
       <VStack
