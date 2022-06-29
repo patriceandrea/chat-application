@@ -9,6 +9,10 @@ const Login = () => {
     validationSchema: Yup.object({
       username: Yup.string().required("Username Required").min(6, "Username too short").max(28, "Username too long")
     }),
+    onSubmit: (values, actions) => {
+      alert(JSON.stringify(values, null, 2));
+      actions.resetForm();
+    },
   });
 
   return (
@@ -20,18 +24,35 @@ const Login = () => {
         justify="center"
         h="100vh"
         spacing="1rem"
+        onSubmit={formik.handleSubmit}
       >
 
         <Heading>Log In</Heading>
         <FormControl>
           <FormLabel fontSize="lg">Username</FormLabel>
-          <Input name='username' placeholder='Enter username' autoComplete='off' size="lg" />
+          <Input
+            name='username'
+            placeholder='Enter username'
+            autoComplete='off'
+            size="lg"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
           <FormErrorMessage>Invalid Username</FormErrorMessage>
         </FormControl>
 
         <FormControl>
           <FormLabel fontSize="lg">Password</FormLabel>
-          <Input name='password' placeholder='Enter password' autoComplete='off' size="lg" />
+          <Input
+            name='password'
+            placeholder='Enter password'
+            autoComplete='off'
+            size="lg"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
           <FormErrorMessage>Invalid Password</FormErrorMessage>
         </FormControl>
 
