@@ -3,8 +3,10 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextField from './TextField';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
@@ -47,7 +49,7 @@ const Login = () => {
         />
         <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type='submit'>Log In</Button>
-          <Button>Create Account</Button>
+          <Button onClick={() => navigate("/register")}>Create Account</Button>
         </ButtonGroup>
       </VStack>
     </Formik >

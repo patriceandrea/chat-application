@@ -1,11 +1,59 @@
-import React from 'react'
+import { VStack, ButtonGroup, Heading, Button } from '@chakra-ui/react'
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import TextField from './TextField';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   return (
-    <div>
+    <Formik
+      initialValues={{ username: "", password: "" }}
+      validationSchema={Yup.object({
+        username: Yup.string()
+          .required("Username Required")
+          .min(6, "Username too short")
+          .max(28, "Username too long"),
+        password: Yup.string()
+          .required("Password required!")
+          .min(6, "Password too short!")
+          .max(28, "Password too long!")
+      })}
+      onSubmit={(values, actions) => {
+        alert(JSON.stringify(values, null, 2));
+        actions.resetForm();
+      }}
+    >
 
-    </div>
-  )
-}
+      <VStack
+        as={Form}
+        w={{ base: "90%", md: "500px" }}
+        m="auto"
+        justify="center"
+        h="100vh"
+        spacing="1rem"
+      >
+        <Heading>Sign Up</Heading>
+        <TextField
+          name="username"
+          placeholder="Enter username"
+          autoComplete="off"
+          label="Username"
+        />
+        <TextField
+          name="password"
+          placeholder="Enter password"
+          autoComplete="off"
+          label="Password"
+        />
+        <ButtonGroup pt="1rem">
+          <Button colorScheme="teal" type='submit'>Create Account</Button>
+          <Button onClick={() => navigate("/")}>Back</Button>
+        </ButtonGroup>
+      </VStack>
+    </Formik >
+  );
+};
 
 export default SignUp;
