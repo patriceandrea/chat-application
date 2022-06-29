@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextField from './TextField';
 import { useNavigate } from 'react-router-dom';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const SignUp = () => {
         />
         <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type='submit'>Create Account</Button>
-          <Button onClick={() => navigate("/")}>Back</Button>
+          <Button onClick={() => navigate("/")} leftIcon={<ArrowBackIcon />}>Back</Button>
         </ButtonGroup>
       </VStack>
     </Formik >
