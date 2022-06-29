@@ -1,6 +1,7 @@
 const express = require("express");
 const { Server } = require("socket.io");
 const helmet = require("helmet");
+const cors = require("cors");
 //initializer
 const app = express();
 
@@ -13,7 +14,13 @@ const io = new Server(server, {
   }
 })
 
+//middleware
 app.use(helmet());
+app.use(cors({
+  origin: "http//:localhost:3000",
+  credentials: true,
+})
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
