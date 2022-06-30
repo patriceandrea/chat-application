@@ -11,7 +11,7 @@ const server = require("http").createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3002",
     credentials: "true",
   },
 });
@@ -20,7 +20,7 @@ const io = new Server(server, {
 app.use(helmet());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3002",
     credentials: true,
   })
 );
