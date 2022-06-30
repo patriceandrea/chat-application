@@ -13,15 +13,16 @@ const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
     credentials: "true",
-  }
-})
+  },
+});
 
 //middleware
 app.use(helmet());
-app.use(cors({
-  origin: "http//:localhost:3000",
-  credentials: true,
-})
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
 );
 app.use(express.json());
 
