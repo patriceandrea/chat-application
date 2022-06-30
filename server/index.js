@@ -2,6 +2,8 @@ const express = require("express");
 const { Server } = require("socket.io");
 const helmet = require("helmet");
 const cors = require("cors");
+const authRouter = require("./routes/authRouter");
+
 //initializer
 const app = express();
 
@@ -23,9 +25,7 @@ app.use(cors({
 );
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json("Hi");
-})
+app.use("/auth", authRouter);
 
 io.on("connect", socket => { })
 
