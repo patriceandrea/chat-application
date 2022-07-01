@@ -3,6 +3,8 @@ const { Server } = require("socket.io");
 const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
+const session = require("express-session");
+require("dotenv").config();
 
 //initializer
 const app = express();
@@ -25,6 +27,16 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(session({
+  secret: process.env.COOKIE_SECRET,
+  credentials: true,
+  name: "sid",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.environment === "production"
+  }
+}))
 
 app.use("/auth", authRouter);
 
