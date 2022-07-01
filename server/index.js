@@ -34,8 +34,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.environment === "production"
-  }
+    secure: process.env.environment === "production",
+    httpOnly: true,
+    sameSite: process.env.environment === "production" ? "none" : "lax",
+  },
+
 }))
 
 app.use("/auth", authRouter);
