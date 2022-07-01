@@ -21,6 +21,10 @@ router.post("/signup", async (req, res) => {
     const newUserQuery = await pool.query("INSERT INTO users(username, passhash) values($1,$2) RETURNING username",
       [req.body.username, hashedPass]
     );
+    req.session.user = {
+      username,
+      id: newUserQuery.rows[0].id
+    }
     res.json({ loggedIn: true, username })
   } else {
     res.json({ loggedIn: false, status: "Username taken" })
