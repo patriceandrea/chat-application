@@ -38,15 +38,15 @@ router.post("/login", async (req, res) => {
 
 });
 
-//POST - sign up
-router.post("/signup", async (req, res) => {
+//POST - sign up/register
+router.post("/register", async (req, res) => {
   validateForm(req, res);
 
   const existingUser = await pool.query("SELECT username from users WHERE  username=$1", [req.body.username]
   );
   if (existingUser.rowCount === 0) {
     //register 
-    const hashedPass = await bcrypt(req.body.password, 10);
+    const hashedPass = await bcrypt.hash(req.body.password, 10);
     const newUserQuery = await pool.query("INSERT INTO users(username, passhash) values($1,$2) RETURNING username",
       [req.body.username, hashedPass]
     );
@@ -54,7 +54,7 @@ router.post("/signup", async (req, res) => {
       username: req.body.username,
       id: newUserQuery.rows[0].id
     }
-    res.json({ loggedIn: true, username })
+    res.json({ loggedIn: true, username: req.body.username })
   } else {
     res.json({ loggedIn: false, status: "Username taken" })
   };
