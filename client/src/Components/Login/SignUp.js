@@ -67,6 +67,7 @@ const SignUp = () => {
           placeholder="Enter password"
           autoComplete="off"
           label="Password"
+          type="password"
         />
         <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type='submit'>Create Account</Button>

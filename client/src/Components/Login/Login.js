@@ -66,6 +66,7 @@ const Login = () => {
           placeholder="Enter password"
           autoComplete="off"
           label="Password"
+          type="password"
         />
         <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type='submit'>Log In</Button>
