@@ -5,17 +5,17 @@ const pool = require("../db");
 const bcrypt = require("bcrypt");
 
 //POST - login
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   validateForm(req, res);
 
 
-  const potentialLogin = pool.query(
+  const potentialLogin = await pool.query(
     "SELECT id, username, passhash FROM users u  WHERE u.username=$1 ",
     [req.body.username]
   );
 
   if (potentialLogin > 0) {
-    const isSamePass = bcrypt.compare(
+    const isSamePass = await bcrypt.compare(
       req.body.password,
       potentialLogin.rows[0].passhash
     ); if (isSamePass) {
@@ -26,9 +26,11 @@ router.post("/login", (req, res) => {
       }
     } else {
       //not good login
+      console.log("not good!");
       res.json({ loggedIn: false, status: "Wrong username or password" });
     }
   } else {
+    console.log("not good!");
     res.json({ loggedIn: false, status: "Wrong username or password" });
   }
 
