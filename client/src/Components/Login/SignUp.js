@@ -43,6 +43,7 @@ const SignUp = () => {
           .then(data => {
             if (!data) return;
             console.log(data);
+            navigate("/home");
           });
       }}
     >
