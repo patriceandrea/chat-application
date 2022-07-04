@@ -4,8 +4,11 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextField from './TextField';
 import { useNavigate } from 'react-router-dom';
+import { AccountContext } from '../AccountContext';
+import { useContext } from 'react';
 
 const Login = () => {
+  const { setUser } = useContext(AccountContext);
   const navigate = useNavigate();
   return (
     <Formik
@@ -41,7 +44,7 @@ const Login = () => {
         })
           .then(data => {
             if (!data) return;
-            console.log(data);
+            setUser({ ...data });
             navigate("/home");
           });
       }}

@@ -1,6 +1,6 @@
 const { createContext, useState } = require("react");
 
-const AccountContext = createContext();
+export const AccountContext = createContext();
 
 const UserContext = ({ children }) => {
   const [user, setUser] = useState({ loggedIn: null });
