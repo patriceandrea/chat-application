@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const { createContext, useState, useEffect } = require("react");
 
@@ -22,17 +22,15 @@ const UserContext = ({ children }) => {
           return;
         }
         return r.json();
-      }).then(
-        data => {
-          if (!data) {
-
-            setUser({ loggedIn: false });
-            return;
-          }
-          // navigate("/home");
-          console.log("logged in")
-          setUser({ ...data })
-        });
+      })
+      .then(data => {
+        if (!data) {
+          setUser({ loggedIn: false });
+          return;
+        }
+        setUser({ ...data })
+        // navigate("/home");
+      });
   }, []);
 
   return (<AccountContext.Provider value={{ user, setUser }}>

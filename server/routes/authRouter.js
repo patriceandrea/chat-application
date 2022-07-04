@@ -38,7 +38,8 @@ router.route("/login")
         res.json({ loggedIn: true, user: req.body.username })
       } else {
         //not good login
-        console.log("not good!");
+
+        console.log("not good! OHHHH NOOOooooooo");
         res.json({ loggedIn: false, status: "Wrong username or password" });
       }
     } else {
