@@ -36,9 +36,9 @@ app.use(session({
   cookie: {
     secure: process.env.environment === "production",
     httpOnly: true,
+    expires: 1000 * 60 * 60 * 24 * 7,
     sameSite: process.env.environment === "production" ? "none" : "lax",
   },
-
 }))
 
 app.use("/auth", authRouter);

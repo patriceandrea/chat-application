@@ -5,40 +5,50 @@ const pool = require("../db");
 const bcrypt = require("bcrypt");
 
 //POST - login
-router.post("/login", async (req, res) => {
-  validateForm(req, res);
-
-
-
-  const potentialLogin = await pool.query(
-    "SELECT id, username, passhash FROM users u  WHERE u.username=$1 ",
-    [req.body.username]
-  );
-
-  if (potentialLogin.rowCount > 0) {
-    const isSamePass = await bcrypt.compare(
-      req.body.password,
-      potentialLogin.rows[0].passhash
-    ); if (isSamePass) {
-      //login 
-      req.session.user = {
-        username: req.body.username,
-        id: potentialLogin.rows[0].id
-      };
-      res.json({ loggedIn: true, user: req.body.username })
+router.route("/login")
+  .get(async (req, res) => {
+    console.log(req.session)
+    if (req.session.user && req.session.user.username) {
+      console.log("logged in")
+      res.json({ loggedIn: true, username: req.session.user.username });
     } else {
-      //not good login
+      res.json({ loggedIn: false })
+    }
+  })
+  .post(async (req, res) => {
+    validateForm(req, res);
+
+
+
+    const potentialLogin = await pool.query(
+      "SELECT id, username, passhash FROM users u  WHERE u.username=$1 ",
+      [req.body.username]
+    );
+
+    if (potentialLogin.rowCount > 0) {
+      const isSamePass = await bcrypt.compare(
+        req.body.password,
+        potentialLogin.rows[0].passhash
+      ); if (isSamePass) {
+        //login 
+        req.session.user = {
+          username: req.body.username,
+          id: potentialLogin.rows[0].id
+        };
+        res.json({ loggedIn: true, user: req.body.username })
+      } else {
+        //not good login
+        console.log("not good!");
+        res.json({ loggedIn: false, status: "Wrong username or password" });
+      }
+    } else {
       console.log("not good!");
       res.json({ loggedIn: false, status: "Wrong username or password" });
     }
-  } else {
-    console.log("not good!");
-    res.json({ loggedIn: false, status: "Wrong username or password" });
-  }
 
 
 
-});
+  });
 
 //POST - sign up/register
 router.post("/register", async (req, res) => {
