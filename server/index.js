@@ -4,6 +4,8 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const session = require("express-session");
+const Redis = require("ioredis");
+const RedisStore = require("connect-redis")(session);
 require("dotenv").config();
 
 //initializer
@@ -19,6 +21,9 @@ const io = new Server(server, {
 });
 
 //middleware
+const redisClient = new Redis();
+
+
 app.use(helmet());
 app.use(
   cors({
@@ -31,6 +36,7 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   credentials: true,
   name: "sid",
+  store: new RedisStore({ client: redisClient }),
   resave: false,
   saveUninitialized: false,
   cookie: {
