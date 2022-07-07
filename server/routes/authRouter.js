@@ -3,19 +3,11 @@ const router = express.Router();
 const validateForm = require("../controllers/validateForm")
 const pool = require("../db");
 const bcrypt = require("bcrypt");
-
+const { handleLogin } = require("../controllers/authController")
 
 //POST - login
 router.route("/login")
-  .get(async (req, res) => {
-    console.log(req.session)
-    if (req.session.user && req.session.user.username) {
-      console.log("logged in")
-      res.json({ loggedIn: true, username: req.session.user.username });
-    } else {
-      res.json({ loggedIn: false })
-    }
-  })
+  .get(handleLogin)
   .post(validateForm, async (req, res) => {
     const potentialLogin = await pool.query(
       "SELECT id, username, passhash FROM users u  WHERE u.username=$1 ",
