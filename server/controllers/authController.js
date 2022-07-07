@@ -1,7 +1,9 @@
 const pool = require("../db");
 const bcrypt = require("bcrypt");
+const express = require("express");
+const router = express.Router();
 
-module.exports.handleLogin = (res, req) => {
+module.exports.handleLogin = (req, res) => {
   if (req.session.user && req.session.user.username) {
     console.log("logged in")
     res.json({ loggedIn: true, username: req.session.user.username });
