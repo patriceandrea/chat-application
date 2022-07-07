@@ -4,6 +4,7 @@ const validateForm = require("../controllers/validateForm")
 const pool = require("../db");
 const bcrypt = require("bcrypt");
 
+
 //POST - login
 router.route("/login")
   .get(async (req, res) => {
@@ -15,11 +16,7 @@ router.route("/login")
       res.json({ loggedIn: false })
     }
   })
-  .post(async (req, res) => {
-    validateForm(req, res);
-
-
-
+  .post(validateForm, async (req, res) => {
     const potentialLogin = await pool.query(
       "SELECT id, username, passhash FROM users u  WHERE u.username=$1 ",
       [req.body.username]
@@ -52,8 +49,8 @@ router.route("/login")
   });
 
 //POST - sign up/register
-router.post("/register", async (req, res) => {
-  validateForm(req, res);
+router.post("/register", validateForm, async (req, res) => {
+
 
   const existingUser = await pool.query("SELECT username from users WHERE  username=$1", [req.body.username]
   );

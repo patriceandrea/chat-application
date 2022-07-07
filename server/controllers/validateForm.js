@@ -6,7 +6,7 @@ const formSchema = Yup.object({
 })
 
 
-const validateForm = (req, res) => {
+const validateForm = (req, res, next) => {
   const formData = req.body;
   formSchema
     .validate(formData)
@@ -17,6 +17,9 @@ const validateForm = (req, res) => {
       if (valid) {
         // res.status(200).send()
         console.log("form is good")
+        next();
+      } else {
+        res.status(422).send()
       }
     });
 
