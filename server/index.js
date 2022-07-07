@@ -1,5 +1,6 @@
 const express = require("express");
 const { Server } = require("socket.io");
+const redisClient = require("./redis");
 const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
@@ -21,8 +22,6 @@ const io = new Server(server, {
 });
 
 //middleware
-const redisClient = new Redis();
-
 
 app.use(helmet());
 app.use(
