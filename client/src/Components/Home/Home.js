@@ -7,9 +7,9 @@ export const FriendContext = createContext();
 
 function Home() {
   const [friendList, setFriendList] = useState([
-    { username: "John Doe", connected: false },
-    { username: "Steven", connected: true },
-    { username: "Steven", connected: true }
+    // { username: "John Doe", connected: false },
+    // { username: "Steven", connected: true },
+    // { username: "Steven", connected: true }
   ]);
 
   return (
