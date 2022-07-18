@@ -6,10 +6,11 @@ import {
   ModalFooter,
   ModalCloseButton
 } from '@chakra-ui/modal';
-import React from 'react'
-import { ModalOverlay, Button } from "@chakra-ui/react"
+import React, { useState } from 'react'
+import { ModalOverlay, Button, Heading } from "@chakra-ui/react"
 import TextField from '../TextField';
 import { Formik, Form } from 'formik';
+import socket from "../../socket"
 const Yup = require("yup");
 
 const friendSchema = Yup.object({
@@ -20,6 +21,8 @@ const friendSchema = Yup.object({
 })
 
 function AddFriendModal({ isOpen, onClose }) {
+  const [error, setError] = useState("")
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -29,14 +32,22 @@ function AddFriendModal({ isOpen, onClose }) {
         <Formik
           initialValues={{ friendName: "" }}
           onSubmit={values => {
-            onClose();
-            // alert(JSON.stringify(values, null, 2));
-            // actions.resetForm();
+            socket.emit("add_friend",
+              values.friendName,
+              ({ errorMsg, done }) => {
+                if (done) {
+                  onClose();
+                  return;
+                }
+                setError(errorMsg)
+              }
+            );
           }}
           validationSchema={friendSchema}
         >
           <Form>
             <ModalBody>
+              <Heading fontSize="md" as="p" color="red.500" textAlign="center">{error}</Heading>
               <TextField
                 label="friend's name"
                 placeholder="Enter friend's username.."

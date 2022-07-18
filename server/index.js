@@ -5,7 +5,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const { sessionMiddleware, wrap, corsConfig } = require("./controllers/serverController");
-const { authorizeUser } = require("./controllers/socketController");
+const { authorizeUser, addFriend, initializeUser } = require("./controllers/socketController");
 const { object } = require("yup");
 
 
@@ -30,9 +30,10 @@ app.use("/auth", authRouter);
 io.use(wrap(sessionMiddleware));
 io.use(authorizeUser)
 io.on("connect", socket => {
-  console.log("USERID:", socket.user.userid)
-  console.log(socket.id);
-  console.log(socket.request.session.user.username);
+  initializeUser(socket)
+
+
+  socket.on("add_friend", addFriend);
 })
 
 server.listen(4000, () => {

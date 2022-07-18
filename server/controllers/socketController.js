@@ -14,3 +14,25 @@ module.exports.authorizeUser = (socket, next) => {
     next();
   }
 }
+
+
+module.exports.initializeUser = socket => {
+  socket.user = { ...socket.request.session.user };
+  redisClient.hset(
+    `userid:${socket.user.username}`,
+    "userid",
+    socket.user.userid
+  );
+  console.log(
+    "USERID:",
+    socket.user.userid,
+    socket.id,
+    socket.request.session.user.username
+  );
+
+}
+
+module.exports.addFriend = (friendName, cb) => {
+  console.log(friendName)
+  cb({ done: false, errorMsg: "not valid name" })
+} 
