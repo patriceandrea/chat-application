@@ -1,6 +1,6 @@
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
-const redisClient = require("./redis");
+const redisClient = require("../redis");
 
 const sessionMiddleware = session({
   secret: process.env.COOKIE_SECRET,
@@ -10,11 +10,20 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.environment === "production",
+    secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7,
-    sameSite: process.env.environment === "production" ? "none" : "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   },
 })
 
-module.exports = { sessionMiddleware }; 
+
+const wrap = (expressMiddleware) => (socket, next) => expressMiddleware(socket.request, {}, next)
+
+const corsConfig = {
+  origin: "http://localhost:3002",
+  credentials: "true"
+
+}
+
+module.exports = { sessionMiddleware, wrap, corsConfig }; 
