@@ -33,7 +33,9 @@ io.on("connect", socket => {
   initializeUser(socket)
 
 
-  socket.on("add_friend", addFriend);
+  socket.on("add_friend", (friendName, cb) => {
+    addFriend(socket, friendName, cb)
+  });
 })
 
 server.listen(4000, () => {
