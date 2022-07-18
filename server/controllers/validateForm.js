@@ -25,4 +25,4 @@ const validateForm = (req, res, next) => {
 
 }
 
-module.exports = validateForm, friendSchema;
+module.exports = validateForm;

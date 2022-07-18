@@ -48,6 +48,7 @@ app.use(session({
 
 app.use("/auth", authRouter);
 
+// io.use((socket, next) => { next() })
 io.on("connect", socket => { })
 
 server.listen(4000, () => {
