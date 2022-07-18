@@ -4,9 +4,8 @@ const { Server } = require("socket.io");
 const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
-const session = require("express-session");
-const Redis = require("ioredis");
 const { sessionMiddleware, wrap, corsConfig } = require("./controllers/serverController");
+const { authorizeUser } = require("./controllers/socketController");
 
 
 //initializer
@@ -14,7 +13,9 @@ const app = express();
 
 const server = require("http").createServer(app);
 
-const io = new Server(server,);
+const io = new Server(server, {
+  cors: corsConfig,
+});
 
 //middleware
 
@@ -26,7 +27,9 @@ app.use(sessionMiddleware)
 app.use("/auth", authRouter);
 
 io.use(wrap(sessionMiddleware));
+io.use(authorizeUser)
 io.on("connect", socket => {
+  console.log(socket.id);
   console.log(socket.request.session.user.username);
 })
 
