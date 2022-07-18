@@ -1,15 +1,24 @@
-import { ChatIcon } from '@chakra-ui/icons';
-import { Divider, Heading, HStack, Tab, TabList, VStack, Text, Circle, useDisclosure } from '@chakra-ui/react';
-import React, { useContext } from 'react'
-import { Button } from "@chakra-ui/button"
-import { FriendContext } from './Home';
-import AddFriendModal from './AddFriendModal';
 
 
-function Sidebar() {
-  const { friendList, setFriendList } = useContext(FriendContext);
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { ChatIcon } from "@chakra-ui/icons";
+import {
+  Circle,
+  Divider,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/layout";
+import { Tab, TabList } from "@chakra-ui/tabs";
+import { useContext } from "react";
+import AddFriendModal from "./AddFriendModal";
+import { FriendContext } from "./Home";
+
+const Sidebar = () => {
+  const { friendList } = useContext(FriendContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       <VStack py="1.4rem">
@@ -21,19 +30,21 @@ function Sidebar() {
         </HStack>
         <Divider />
         <VStack as={TabList}>
-          {friendList.map(friend => {
-            return (<HStack as={Tab}>
-              <Circle bg={friend.connected ? "green.500" : "red.500"}
+          {friendList.map(friend => (
+            <HStack as={Tab} key={`friend:${friend}`}>
+              <Circle
+                bg={friend.connected ? "green.700" : "red.500"}
                 w="20px"
-                h="20px" />
-              <Text>{friend.username}</Text>
-            </HStack>)
-          })}
+                h="20px"
+              />
+              <Text>{friend}</Text>
+            </HStack>
+          ))}
         </VStack>
-      </VStack >
+      </VStack>
       <AddFriendModal isOpen={isOpen} onClose={onClose} />
     </>
-  )
-}
+  );
+};
 
 export default Sidebar;
