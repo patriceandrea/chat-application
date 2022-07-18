@@ -8,7 +8,6 @@ const session = require("express-session");
 const Redis = require("ioredis");
 const { sessionMiddleware, wrap, corsConfig } = require("./controllers/serverController");
 
-require("dotenv").config();
 
 //initializer
 const app = express();
