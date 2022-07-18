@@ -23,7 +23,7 @@ const wrap = (expressMiddleware) => (socket, next) => expressMiddleware(socket.r
 
 const corsConfig = {
   origin: "http://localhost:3002",
-  credentials: "true"
+  credentials: true
 
 }
 

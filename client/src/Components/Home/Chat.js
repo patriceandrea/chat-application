@@ -20,7 +20,9 @@ function Chat() {
       fontSize="lg"
     >
       < TabPanels >
-        <Text> No Friends :( Click add friend to start chatting </Text>
+        <TabPanel>
+          <Text> No Friends :( Click add friend to start chatting </Text>
+        </TabPanel>
       </TabPanels >
     </VStack >
   );
