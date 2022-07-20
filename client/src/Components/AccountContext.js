@@ -29,9 +29,9 @@ const UserContext = ({ children }) => {
           return;
         }
         setUser({ ...data })
-        // navigate("/home");
+        navigate("/home");
       });
-  }, []);
+  }, [navigate]);
 
   return (<AccountContext.Provider value={{ user, setUser }}>
     {children}
