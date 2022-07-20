@@ -5,8 +5,10 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const { sessionMiddleware, wrap, corsConfig } = require("./controllers/serverController");
-const { authorizeUser, addFriend, initializeUser, onDisconnect } = require("./controllers/socketController");
-const { object } = require("yup");
+const { authorizeUser, addFriend, initializeUser, onDisconnect, dm } = require("./controllers/socketController");
+
+
+
 
 
 //initializer
@@ -37,8 +39,11 @@ io.on("connect", socket => {
     addFriend(socket, friendName, cb)
   });
 
-  socket.on("disconnecting", () => onDisconnect(socket))
+
+  socket.on("dm", message => dm(socket, message));
+  socket.on("disconnecting", () => onDisconnect(socket));
 })
+
 
 server.listen(4000, () => {
   console.log("Server listening on port 4000");
