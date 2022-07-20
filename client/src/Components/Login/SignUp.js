@@ -29,7 +29,7 @@ const SignUp = () => {
         const vals = { ...values };
         // alert(JSON.stringify(values, null, 2));
         actions.resetForm();
-        fetch("http://localhost:4000/auth/register", {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
           method: "POST",
           credentials: "include",
           headers: {

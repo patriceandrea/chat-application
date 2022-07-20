@@ -22,7 +22,7 @@ const wrap = expressMiddleware => (socket, next) =>
   expressMiddleware(socket.request, {}, next);
 
 const corsConfig = {
-  origin: "http://localhost:3002",
+  origin: process.env.CLIENT_URL,
   credentials: true,
 };
 
