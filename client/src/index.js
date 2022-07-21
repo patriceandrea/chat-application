@@ -8,12 +8,12 @@ import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter >
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
       </ChakraProvider>
-    </HashRouter>
+    </HashRouter >
   </React.StrictMode>,
   document.getElementById("root")
 );
